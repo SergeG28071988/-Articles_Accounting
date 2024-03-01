@@ -121,14 +121,31 @@ def delete_author(request, pk):
 
 # Представления для работы со статьями
 def article_list(request):
-    pass
+    return render(request, 'article_list.html')
+
+
 def display_articles(request):
-    pass
+    articles = Article.objects.all()
+
+    context = {
+        'articles': articles,
+        'header': 'Статья' 
+    }   
+
+    return render(request, 'article_list.html', context)
+
+
 def add_article(request):
     pass
-def article_detail(request):
+
+
+def article_detail(request, pk):
     pass
-def edit_article(request):
+
+
+def edit_article(request, pk):
     pass
-def delete_article(request):
+
+
+def delete_article(request, pk):
     pass

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title  %} 
+Авторы
+{% endblock  %}
+
+{% block content %}
+<br>
+<div class="header-bar">
+    <div>
+        <br>
+        <h1>Hello {{ request.user|title }}</h1>        
+    </div>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+<br> 
+<div class="button-group">
+    <a href="{% url 'display_articles' %}" class="btn btn-primary btn-end" role="button">Статьи</a> 
+    <a href="{% url 'add_article' %}" class="btn btn-warning btn-sm" role="button"> +</a>   
+</div>
+
+<br>
+<h4>Currently Viewing {{ header }}</h4>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date Published</th>            
+            <th>Author</th>            
+            <th>Functions</th>                     
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.pk }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.content }}</td>
+                <td>{{ article.date_published }}</td>
+                <td>{{ article.author }}</td>
+                <td>
+                    <a href="{% url 'article_detail' article.pk %}" class="btn btn-warning btn-sm" role="button"> Подробнее</a>   
+                    <a href="{% url 'edit_article' article.pk %}" class="btn btn-success btn-sm" role="button">Изменить</a>
+                    <a href="{% url 'delete_article' article.pk %}" class="btn btn-danger btn-sm" role="button">X</a>
+                </td>               
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+
+{% endblock content %}
