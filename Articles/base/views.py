@@ -136,16 +136,51 @@ def display_articles(request):
 
 
 def add_article(request):
-    pass
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect('article_list')
+    else:
+        form = ArticleForm()
+        context = {
+            'form': form,
+            'header': 'Статья'
+        }   
+        return render(request, 'add_article.html', context)
 
 
 def article_detail(request, pk):
-    pass
+    article = get_object_or_404(Article, pk=pk)
+
+    context = {
+        'article': article,
+    }
+
+    return render(request, 'article_detail.html', context)
 
 
 def edit_article(request, pk):
-    pass
+    article = get_object_or_404(Article, pk=pk)
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+
+        if form.is_valid():
+            form.save()
+            return redirect('article_list')
+    else:
+        form = ArticleForm(instance=article)
+    
+    context = {
+        'form': form,
+        'header': 'Редактирование статьи'
+    }   
+    return render(request, 'edit_article.html', context)
 
 
 def delete_article(request, pk):
-    pass
+    article = get_object_or_404(Article, pk=pk)
+    article.delete()
+    return redirect("article_list")

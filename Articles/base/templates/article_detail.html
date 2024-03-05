@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Детали статьи
+{% endblock %}
+
+{% block content %}
+<br>
+<div class="header-bar">
+    <div>
+        <br>
+        <h1>Hello {{ request.user|title }}</h1>        
+    </div>
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+
+<div class="container mt-5">
+    <h1 class="text-center">Детали статьи</h1>
+    <div class="alert alert-info">
+        <div class="row">
+            <div class="col">
+                <h4>Title:</h4>
+                <p> {{ article.title }}</p>
+            </div>
+            <div class="col">
+                <h4>Content:</h4>
+                <p> {{ article.content }}</p>
+            </div>
+            <div class="col">
+                <h4>Date Published:</h4>
+                <p> {{ article.date_published }}</p>
+            </div>   
+            <div class="col">
+                <h4>Author:</h4>
+                <p> {{ article.author }}</p>
+            </div>           
+        </div>          
+    </div>
+</div> 
+{% endblock %}
